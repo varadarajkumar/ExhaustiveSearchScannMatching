@@ -30,7 +30,7 @@ int main()
 	cout << endl;
 
 	float searchRes; std::vector<float> searchResVec;
-	cout << " Enter Search Resolutions (in Meters), separated with spaces and end with 9999" << endl;
+	cout << " Enter Search Resolutions (in Meters), separated with spaces and enter '9999' to end pushing values" << endl;
 	while ((cin >> searchRes) && searchRes != 9999)
 		searchResVec.push_back(searchRes);
 		
@@ -47,13 +47,13 @@ int main()
 	cin >> tTheta;
 	cout << endl;
 
-	Pose pose;
+	Pose bestPose;
 	UtilsSharedPtr ptrUtils= UtilsSharedPtr(new Utils(gXPos, gYPos, gTheta));
 
-	MatchFinder* ptrMatchFinder = new MatchFinder(gridH, gridW, rfFov, rfRes, rfMaxRange, aXPos, aYPos, aTheta, tXPos, tYPos, tTheta, ptrUtils);
+	MatchFinder* ptrMatchFinder = new MatchFinder(gridH, gridW, rfFov, rfRes, rfMaxRange, aXPos, aYPos, aTheta, tXPos, tYPos, tTheta, searchResVec, ptrUtils);
 	ptrMatchFinder->GenerateApproxRFPosition();
-	ptrMatchFinder->CalcuateRangeFinderPosition(pose);
-	cout <<"Range finder pose X-Poistion : " << pose.getXPos()<<", Y-Position: "<< pose.getYPos()<<", Theta: "<<pose.getTheta()<<endl;
+	ptrMatchFinder->CalcuateRangeFinderPosition(bestPose);
+	cout <<"Range finder pose X-Poistion : " << bestPose.getXPos()<<", Y-Position: "<< bestPose.getYPos()<<", Theta: "<< bestPose.getTheta()<<endl;
 	
 	return 0;
 }

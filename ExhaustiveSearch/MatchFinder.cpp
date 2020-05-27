@@ -6,7 +6,7 @@
 
 #include "MatchFinder.h"
 
-MatchFinder::MatchFinder(int gridH, int gridW, float rfFov, float rfRes, float rfMr, float aXPos, float aYPos, float aTheta, float tXPos, float tYPos, float tTheta, UtilsSharedPtr utilsPtr)
+MatchFinder::MatchFinder(int gridH, int gridW, float rfFov, float rfRes, float rfMr, float aXPos, float aYPos, float aTheta, float tXPos, float tYPos, float tTheta, std::vector<float> searchResolutions, UtilsSharedPtr utilsPtr)
 : m_ApproxXVal(aXPos)
 , m_ApproxYVal(aYPos)
 , m_ApproxTheta(aTheta)
@@ -16,7 +16,7 @@ MatchFinder::MatchFinder(int gridH, int gridW, float rfFov, float rfRes, float r
 , m_UtilsPtr(utilsPtr)
 {
 	m_OccupancyGrid = Grid(gridH, gridW, utilsPtr);
-	m_RangeFinderData = RangeFinderData(rfFov, rfRes, rfMr, utilsPtr);
+	m_RangeFinderData = RangeFinderData(rfFov, rfRes, rfMr, searchResolutions, utilsPtr);
 }
 
 void MatchFinder::GenerateApproxRFPosition()
@@ -44,10 +44,14 @@ void MatchFinder::CalcuateRangeFinderPosition(Pose &pose)
 			float hypSumForEachX = 0;
 			for(auto y : m_ApprxYVals)
 			{				
+				//Translating rotating point by x
 				r_x = cos(t) * x - sin(t) * y;
+				
+				//Translating the point by y
 				r_y = sin(t) * r_x + cos(t) * y;
+				
 				Pose posInGrid;
-				GetUtils()->ConvertToGridCoordinates(posInGrid, r_x, r_y, t);
+				GetUtils()->ConvertToGridCoordinates(posInGrid, r_x, r_y, t); //Converting into Grid coordinates system
 				auto OccupancyStatus = m_OccupancyGrid.GetCellOccupancy(posInGrid);
 				if (OccupancyStatus == 255)
 				{
@@ -55,7 +59,7 @@ void MatchFinder::CalcuateRangeFinderPosition(Pose &pose)
 					hypSumForEachX += OccupancyStatus;
 				}
 			}
-			if (hypSumForEachX > 0 && finalHypoSum == hypSumForEachX )
+			if (hypSumForEachX > 0 && finalHypoSum == hypSumForEachX ) //If same score just append to the existing list
 			{
 				finalRFPoses.insert(finalRFPoses.end(), rfCoordinates.begin(), rfCoordinates.end());
 				finalHypoSum = hypSumForEachX;				

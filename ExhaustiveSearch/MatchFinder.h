@@ -34,7 +34,7 @@ class MatchFinder
 {
 	public:
 
-		MatchFinder(int gridH, int gridW, float rfFov, float rfRes, float rfMr, float aXPos, float aYPos, float aTheta, float tXPos, float tYPos, float tTheta, UtilsSharedPtr utilsPtr);
+		MatchFinder(int gridH, int gridW, float rfFov, float rfRes, float rfMr, float aXPos, float aYPos, float aTheta, float tXPos, float tYPos, float tTheta, std::vector<float> searchResolutions, UtilsSharedPtr utilsPtr);
 		void CalcuateRangeFinderPosition(Pose&);
 		void GenerateApproxRFPosition();
 		std::vector<float> GetRangeFinderDataResolutions() { m_RangeFinderData.GetRangeFinderResolutions(); }
@@ -47,8 +47,8 @@ class MatchFinder
 		RangeFinderData m_RangeFinderData;
 		UtilsSharedPtr m_UtilsPtr;
 		std::vector<Pose> m_ApproxRFPosInGrid;
-		std::vector<float> m_ApprxXVals, m_ApprxYVals, m_ApprxTVals;
-		float m_ApproxXVal, m_ApproxYVal, m_ApproxTheta, m_TolXVal, m_TolYVal, m_TolTheta;
+		std::vector<float> m_ApprxXVals, m_ApprxYVals, m_ApprxTVals; 
+		float m_ApproxXVal, m_ApproxYVal, m_ApproxTheta, m_TolXVal, m_TolYVal, m_TolTheta;//RF Approximate & Tolerance position details
 		std::vector<Deviation> m_Deviation;
 };
 #endif

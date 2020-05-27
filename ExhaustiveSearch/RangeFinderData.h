@@ -19,7 +19,7 @@ class RangeFinderData
 	typedef vector<float> FLOAT_VEC;
 public: 
 	RangeFinderData();
-	RangeFinderData(float fov, float res, float maxRange, UtilsSharedPtr uPtr);
+	RangeFinderData(float fov, float res, float maxRange, std::vector<float> sRes, UtilsSharedPtr uPtr);
 	FLOAT_VEC GetRangeFinderData();
 	FLOAT_VEC GetRangeFinderResolutions() {	return m_RangeFinderRes;}
 	vector<Pose> GetRFEuclideanCloud() { return m_RfEuclideanCloudData; }
@@ -28,9 +28,9 @@ public:
 	UtilsSharedPtr GetUtils() { return m_UtilsPtr; }
 private: 
 
-	float m_fov; 
+	float m_FieldOfView; 
 	float m_MaxRangeVal;
-	float m_res;
+	float m_Resolution;
 	UtilsSharedPtr m_UtilsPtr;
 	FLOAT_VEC m_Thetas;
 	FLOAT_VEC m_RangeFinderRes;

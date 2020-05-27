@@ -10,26 +10,20 @@
 RangeFinderData::RangeFinderData()
 {
 	m_MaxRangeVal = 20;
-	m_fov = 0;
-	m_res = 0.05f;
+	m_FieldOfView = 0;
+	m_Resolution = 0.05f;
 }
 
-RangeFinderData::RangeFinderData(float fov, float res, float maxRange, UtilsSharedPtr UtilsPtr)
+RangeFinderData::RangeFinderData(float fov, float res, float maxRange, std::vector<float> searchRes, UtilsSharedPtr UtilsPtr)
+	:m_RangeFinderRes(searchRes)
 {
-	m_fov = fov;
+	m_FieldOfView = fov;
 	m_MaxRangeVal = maxRange;
-	m_res = res;
+	m_Resolution = res;
 	m_UtilsPtr = UtilsPtr;
 
-	//RangeFinder distances 10, 12, 14, 16,18, 20 meters
-	m_RangeFinderRes.clear();	
-	for (float resRange = 10; resRange<=20; resRange += 2.0)
-	{
-		m_RangeFinderRes.push_back(resRange);
-	}
-
-	//finding the range of all anglesn- -theta/2 to +theta/2
-	for (float i = -(m_fov / 2); i < m_fov / 2; i = i + m_res)
+	//finding the range of all angles fromn- -theta/2 to +theta/2
+	for (float i = -(m_FieldOfView / 2); i < m_FieldOfView / 2; i = i + m_Resolution)
 	{
 		m_Thetas.push_back(i);
 	}
@@ -45,9 +39,9 @@ RangeFinderData::FLOAT_VEC RangeFinderData::GetRangeFinderData()
 void RangeFinderData::GenerateRFEuclideanCloud()
 {
 	cout << "Generating Range Finder Euclidean Cloud data..." << endl;
-	for (int resIndex = 0; resIndex < GetRangeFinderResolutions().size(); ++resIndex)
+	for (size_t resIndex = 0; resIndex < GetRangeFinderResolutions().size(); ++resIndex)
 	{
-		for (int thetaIndex = 0; thetaIndex < GetRangeFinderData().size(); ++thetaIndex)
+		for (size_t thetaIndex = 0; thetaIndex < GetRangeFinderData().size(); ++thetaIndex)
 		{
 			float thetaValue = GetRangeFinderData()[thetaIndex];
 			float resValue = GetRangeFinderResolutions()[resIndex];

@@ -15,7 +15,8 @@ Grid::Grid(int height, int width, UtilsSharedPtr utilPtr)
 	std::vector<std::pair<int, int>> gridFillers = m_Utils->GetGridValues();
 	cout <<"Generating Cells(0.05x0.05) with in the Grid ..."<< endl;
 	// Fill the Grid with Cells
-	int id = 0, gfIndex =0, secondVal;
+	int id = 0,  secondVal;
+	size_t gfIndex = 0;
 	for (auto row = m_GridResolution; row <= m_GridWidth; row+= 1)
 	{
 		for (auto col = m_GridResolution; col <= m_GridHeight; col += 1)
@@ -37,7 +38,7 @@ Grid::Grid(int height, int width, UtilsSharedPtr utilPtr)
 			{
 				secondVal = gridFillers[gfIndex].second;
 				m_Cells[p] = 255;
-					cout << "1 ";
+					cout << "1  ";
 			}
 			else
 			{
