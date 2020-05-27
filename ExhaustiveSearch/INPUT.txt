@@ -1,0 +1,4 @@
+#Grid values to be filled in the format 10-15,26-29,30,42-45
+#to fill the cells which are from 10 to 15, 26 to 29, 30, 42 to 45
+#GridInput=10-15,26-29,30,42-45
+GridInput=1560-1599
