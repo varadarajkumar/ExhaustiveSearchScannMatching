@@ -17,7 +17,7 @@ class Grid
 	//Pose as Key and Occupancy Information as Value in the OccupancyGrid
 	using POSE_MAP_TYPE = std::map<Pose, unsigned _int8, PoseComparator>;
 public:	
-	Grid() {};
+	Grid();
 	Grid(int h, int w, UtilsSharedPtr);
 	POSE_MAP_TYPE GetCells() { return m_Cells; }
 	bool IsCellOccupied(Pose p);

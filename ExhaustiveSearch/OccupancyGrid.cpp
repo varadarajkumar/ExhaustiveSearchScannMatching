@@ -4,6 +4,13 @@
 #include <algorithm>
 #include <vector>
 
+Grid::Grid()
+{
+	m_GridHeight = 0;
+	m_GridWidth = 0;
+	m_GridResolution = 0;
+};
+
 Grid::Grid(int height, int width, UtilsSharedPtr utilPtr)
 	: m_Utils(utilPtr)
 {
